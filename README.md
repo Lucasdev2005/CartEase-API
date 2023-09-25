@@ -1,43 +1,73 @@
-# CartEase API
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+</p>
 
-A CartEase API é uma interface de programação de aplicativos que simplifica a criação e gerenciamento de lojas online. Com esta API, os desenvolvedores podem integrar facilmente recursos de comércio eletrônico em suas aplicações, permitindo uma experiência de compra fluida e eficiente para os usuários.
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-<div align="center">
-  <img width="100" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-plain.svg" />
-  <img width="100" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-plain-wordmark.svg" />
-  <img width="100" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-plain-wordmark.svg"> 
-  <img width="100" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" />
-</div>
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Tecnologias Utilizadas
+## Description
 
-- [NestJS](https://nestjs.com/): Um framework Node.js para construir aplicativos eficientes e escaláveis.
-- [PostgreSQL](https://www.postgresql.org/): Um sistema de gerenciamento de banco de dados relacional de código aberto.
-- [JWT (JSON Web Tokens)](https://jwt.io/): Para autenticação segura.
-- [Docker](https://www.docker.com/): Plataforma para desenvolvimento, envio e execução de aplicativos em contêineres.
-- Outras bibliotecas e dependências relevantes estão listadas no arquivo `package.json`.
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Funcionalidades Principais
+## Installation
 
-- Catálogo de Produtos: Consulta e exibição de produtos com detalhes completos.
-- Carrinho de Compras: Adição e remoção de produtos, ajuste de quantidades e resumo do pedido.
-- Finalização de Compra: Checkout fluido com informações de envio e métodos de pagamento.
-- Gerenciamento de Pedidos: Acompanhamento e gestão do histórico de pedidos.
-- Autenticação de Usuários: Criação de contas e login seguro.
-- Segurança de Pagamento: Integração com métodos de pagamento seguros.
+```bash
+$ npm install
+```
 
-## Como Usar
+## Running the app
 
-1. Clone este repositório: `git clone https://github.com/seu-usuario/cartease-api.git`
-2. Instale as dependências: `npm install`
-3. Configure as variáveis de ambiente no arquivo `.env` (consulte `.env.example` para referência).
-4. Inicie o servidor: `npm start`
-5. Acesse a API em `http://localhost:3000` por padrão.
+```bash
+# development
+$ npm run start
 
-## Contribuição
+# watch mode
+$ npm run start:dev
 
-Sinta-se à vontade para contribuir para o desenvolvimento da CartEase API. Para informações sobre como contribuir, consulte nosso [guia de contribuição](CONTRIBUTING.md).
+# production mode
+$ npm run start:prod
+```
 
-## Licença
+## Test
 
-Este projeto está licenciado sob a Licença MIT - consulte o arquivo [LICENSE](LICENSE) para obter detalhes.
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](LICENSE).
