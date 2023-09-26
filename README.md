@@ -28,10 +28,9 @@ A CartEase API é uma interface de programação de aplicativos que simplifica a
 
 ## Como Usar
 
-1. Clone este repositório: `git clone https://github.com/seu-usuario/cartease-api.git`
-2. Instale as dependências: `npm install`
-3. Configure as variáveis de ambiente no arquivo `.env` (consulte `.env.example` para referência).
-4. Inicie o servidor: `npm start`
+1. Clone este repositório: `https://github.com/seu-usuario/CartEase-API.git`
+2. tenha docker em sua máquina.
+3. rode o comando `docker compose up` para rodar o projeto.
 5. Acesse a API em `http://localhost:3000` por padrão.
 
 ## Contribuição
