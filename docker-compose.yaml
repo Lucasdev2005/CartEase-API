@@ -13,6 +13,8 @@ services:
       POSTGRES_DB: mydb
     depends_on:
       - db
+    volumes:
+      - ./:/app/api
   db:
     image: postgres:13
     environment:
