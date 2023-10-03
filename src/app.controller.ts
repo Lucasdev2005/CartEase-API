@@ -1,13 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
 
-@Controller('crud')
+@Controller()
 export class AppController {
-  constructor(public prisma: PrismaService) {}
+  constructor() {}
 
-  @Get('get')
-  public getItem() {
-    return 'olá';
+  @Get()
+  helloWorld() {
+    return {hello: 'world'}
   }
-
 }
