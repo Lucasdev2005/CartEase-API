@@ -25,14 +25,8 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/package-lock.json ./package-lock.json
+COPY --from=builder /app/prisma ./prisma
 EXPOSE 3000
-
-#configurar permissões do usuário node para somente leitura de arquivos
-USER root
-RUN adduser node root
-RUN chmod -R 775 /tmp
-RUN chown -R node:root /tmp
-USER node
 
 # compilando build da aplicação
 CMD ["npm", "run" , "start:prod"]

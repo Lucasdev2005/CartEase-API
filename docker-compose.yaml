@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db: 
+    image: postgres:11.21-bullseye
+    environment:
+        POSTGRES_USER: cartease
+        POSTGRES_PASSWORD: cartease@123
+        POSTGRES_DB: db
+  app:
+    environment:
+      DATABASE_URL: postgresql://cartease:cartease@123@db:5432/db?schema=public
+    build:
+      dockerfile: ./Dockerfile
+    depends_on:
+      - db
