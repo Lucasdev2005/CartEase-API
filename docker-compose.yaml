@@ -6,6 +6,8 @@ services:
         POSTGRES_USER: cartease
         POSTGRES_PASSWORD: cartease@123
         POSTGRES_DB: db
+    ports:
+      - 5432:5432
   app-production:
     environment:
       DATABASE_URL: postgresql://cartease:cartease@123@db:5432/db?schema=public
