@@ -1,7 +1,9 @@
 # Etapa 1 buildando aplicação
 FROM node:16.20-alpine as builder
+
 # defindo workdir para pasta app
 WORKDIR /app
+
 # copiando package.json para instalar dependenências
 COPY package.json package-lock.json ./
 RUN npm install

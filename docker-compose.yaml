@@ -6,10 +6,23 @@ services:
         POSTGRES_USER: cartease
         POSTGRES_PASSWORD: cartease@123
         POSTGRES_DB: db
-  app:
+  app-production:
     environment:
       DATABASE_URL: postgresql://cartease:cartease@123@db:5432/db?schema=public
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.production
     depends_on:
       - db
+    ports:
+      - 3000:3000
+  app-develop:
+    environment:
+      DATABASE_URL: postgresql://cartease:cartease@123@db:5432/db?schema=public
+    build:
+      dockerfile: ./Dockerfile.develop
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
