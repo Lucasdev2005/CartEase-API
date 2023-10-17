@@ -1,23 +1,25 @@
 import { Controller, Get, Headers } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
+import { baseRepository } from 'src/repositories/base.repository';
 
 @Controller('crud')
 export class CrudController {
-    constructor(private prisma: PrismaService) {}
+    constructor(public prisma: PrismaService) {}
 
     @Get('get')
-    public getResource(@Headers() headers) {
-        return this.prisma.user.findMany();
+    public async getResource(@Headers() headers) {
+        return await this.getRepository(headers.repository).findItem();
     }
 
-    public getRepository(repository) {
-        let repositoryClass = require(`../../repositories/${repository}.repository.ts`);
-        if (repositoryClass) {
+    public getRepository(repository): baseRepository {
+        let repositoryClass = require(`../../repositories/${repository}.repository`);
+        try {
             let repositoryInstanced = new repositoryClass.default();
             return repositoryInstanced;
         }
-        else {
-            return "reposiory '" + repository + "' not found! :(";
+        catch (error) {
+            throw new Error(error);
         }
     }
 }
+ 
