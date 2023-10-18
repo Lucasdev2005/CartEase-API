@@ -29,7 +29,7 @@ export class CrudController {
         return await this.getRepository(headers.repository).deleteItem(body.where);
     }
 
-    @Get()
+    @Get("ListResource")
     public async listResource(@Headers() headers, @Body() body) {
         return this.getRepository(headers.repository).findAllItemsBy({
             distinct: body.distinct,
