@@ -32,10 +32,10 @@ export class CrudController {
     @Get("ListResource")
     public async listResource(@Headers() headers, @Body() body) {
         return this.getRepository(headers.repository).findAllItemsBy({
-            distinct: body.distinct,
-            select: body.select,
-            orderBy: body.orderBy,
-            where: body.where
+            distinct: body.distinct || {},
+            select: body.select || {},
+            orderBy: body.orderBy || {},
+            where: body.where || {}
         });
     }
 
