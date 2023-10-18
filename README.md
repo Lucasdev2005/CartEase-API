@@ -30,7 +30,7 @@ A CartEase API é uma interface de programação de aplicativos que simplifica a
 
 1. Clone este repositório: `https://github.com/seu-usuario/CartEase-API.git`
 2. tenha docker em sua máquina.
-3. rode o comando `docker compose up` para rodar o projeto.
+3. rode `sh build-develop` para rodar o projeto em ambiente desenvolvimento ou `sh build-prod` para rodar em ambiente de produção.
 5. Acesse a API em `http://localhost:3000` por padrão.
 
 ## Contribuição
