@@ -1,4 +1,4 @@
-import { Controller, Get, Headers } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Head, Headers, Post, Put } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { baseRepository } from 'src/repositories/base.repository';
 
@@ -6,12 +6,40 @@ import { baseRepository } from 'src/repositories/base.repository';
 export class CrudController {
     constructor(public prisma: PrismaService) {}
 
-    @Get('get')
-    public async getResource(@Headers() headers) {
-        return await this.getRepository(headers.repository).findItem();
+    @Get('getResource')
+    public async getResource(@Headers() headers, @Body() body) {
+        return await this.getRepository(headers.repository).findItem(body.where);
     }
 
-    public getRepository(repository): baseRepository {
+    @Post('createResource')
+    public async createResource(@Headers() headers, @Body() body) {
+        return await this.getRepository(headers.repository).createItem(body);
+    }
+
+    @Put('updateResource')
+    public async updateResource(@Headers() headers, @Body() body) {
+        return await this.getRepository(headers.repository).updateItem({
+            data: body.data,
+            where: body.where
+        });
+    }
+
+    @Delete("deleteResource")
+    public async deleteResource(@Headers() headers, @Body() body) {
+        return await this.getRepository(headers.repository).deleteItem(body.where);
+    }
+
+    @Get()
+    public async listResource(@Headers() headers, @Body() body) {
+        return this.getRepository(headers.repository).findAllItemsBy({
+            distinct: body.distinct,
+            select: body.select,
+            orderBy: body.orderBy,
+            where: body.where
+        });
+    }
+
+    public getRepository(repository): baseRepository<any> {
         let repositoryClass = require(`../../repositories/${repository}.repository`);
         try {
             let repositoryInstanced = new repositoryClass.default();

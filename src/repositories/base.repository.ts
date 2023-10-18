@@ -1,31 +1,33 @@
 import { PrismaService } from "src/prisma.service";
 
-export class baseRepository {
+export class baseRepository<Type> {
     public prisma = new PrismaService();
     constructor(public model: string) {}
 
-    public findItem() {
-        return this.prisma[this.model].findFirst();
+    public findItem(where): Type {
+        return this.prisma[this.model].findUnique({where:where});
     }
 
-    public createItem(data) {
-        return this.prisma[this.model].create(data);
+    public async createItem(data): Promise<Type> {
+        return await this.prisma[this.model].create({
+            data: data
+        });
     }
 
-    public updateItem({data, where}) {
+    public updateItem({data, where}): Type {
         return this.prisma[this.model].update({
             where: where,
             data: data
         });
     }
-
-    public deleteItem(where) {
+ 
+    public deleteItem(where): Type {
         return this.prisma[this.model].delete({
             where: where
         });
     }
 
-    public findAllItemsBy({distinct={}, where={}, select={}, orderBy={}}) {
+    public findAllItemsBy({distinct={}, where={}, select={}, orderBy={}}): Type[] {
         return this.prisma[this.model].findMany({
             where: where,
             distinct: distinct,

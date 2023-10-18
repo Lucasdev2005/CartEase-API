@@ -1,10 +1,8 @@
-import { PrismaService } from "src/prisma.service";
 import { baseRepository } from "./base.repository";
+import { User } from "@prisma/client";
 
-export default class UserRepository extends baseRepository {
+export default class UserRepository extends baseRepository<User> {
 
-    constructor(prisma: PrismaService) {
-        super("user");
-    }
+    constructor(public user: User) {super("user")}
 
-} 
+}
