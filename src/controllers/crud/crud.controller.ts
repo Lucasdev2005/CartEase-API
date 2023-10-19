@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Head, Headers, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Head, Headers, InternalServerErrorException, Post, Put } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { baseRepository } from 'src/repositories/base.repository';
 

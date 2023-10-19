@@ -16,6 +16,8 @@ model User {
   USR_Username String @unique
   USR_Name String
   USR_Password String
+  USR_Address String
+  USR_Seller Boolean
 
   @@map("users")
 }

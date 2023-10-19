@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "users" ALTER COLUMN "USR_Address" SET DEFAULT 'N/A',
+ALTER COLUMN "USR_Seller" SET DEFAULT false;

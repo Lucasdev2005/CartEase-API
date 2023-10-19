@@ -10,7 +10,7 @@ services:
       - 5432:5432
   app-production:
     environment:
-      DATABASE_URL: postgresql://cartease:cartease@123@db:5432/db?schema=public
+      DATABASE_URL: postgresql://cartease:cartease@123@db:5432/db
     build:
       dockerfile: ./Dockerfile.production
     depends_on:
@@ -19,7 +19,7 @@ services:
       - 3000:3000
   app-develop:
     environment:
-      DATABASE_URL: postgresql://cartease:cartease@123@db:5432/db?schema=public
+      DATABASE_URL: postgresql://cartease:cartease@123@db:5432/db
     build:
       dockerfile: ./Dockerfile.develop
     depends_on:
