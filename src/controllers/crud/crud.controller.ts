@@ -1,10 +1,8 @@
 import { Body, Controller, Delete, Get, Head, Headers, InternalServerErrorException, Post, Put } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
 import { baseRepository } from 'src/repositories/base.repository';
 
 @Controller('crud')
 export class CrudController {
-    constructor(public prisma: PrismaService) {}
 
     @Get('getResource')
     public async getResource(@Headers() headers, @Body() body) {
