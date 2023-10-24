@@ -18,16 +18,18 @@ model User {
   USR_Password String
   USR_Address String
   USR_Seller Boolean
-  products Products[]
+  products Product[]
 
   @@map("users")
 }
 
-model Products {
+model Product {
   PRD_ProductId Int @id @default(autoincrement())
   PRD_Price Int
   PRD_Name String
   PRD_stock Int
   PRD_Seller Int
   user User @relation(fields: [PRD_Seller], references: [USR_UserId])
+
+  @@map("products")
 }
