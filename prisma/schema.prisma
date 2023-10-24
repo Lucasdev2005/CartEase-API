@@ -19,6 +19,7 @@ model User {
   USR_Address String
   USR_Seller Boolean
   products Product[]
+  shopping Sale[]
 
   @@map("users")
 }
@@ -30,6 +31,15 @@ model Product {
   PRD_stock Int
   PRD_Seller Int
   user User @relation(fields: [PRD_Seller], references: [USR_UserId])
+  salesProducts Sale[] @relation("salesProducts")
 
   @@map("products")
+}
+
+model Sale {
+  SLE_SaleId Int @id @default(autoincrement())
+  SLE_DateSale DateTime @default(now())
+  SLE_buyer Int
+  user User @relation(fields: [SLE_buyer], references: [USR_UserId])
+  products Product[] @relation("salesProducts")
 }
