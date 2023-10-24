@@ -23,7 +23,6 @@ model User {
   @@map("users")
 }
 
-
 model Products {
   PRD_ProductId Int @id @default(autoincrement())
   PRD_Price Int
