@@ -20,6 +20,7 @@ model User {
   USR_Seller Boolean
   products Product[]
   shopping Sale[]
+  shoppingCarts shoppingCart[]
 
   @@map("users")
 }
@@ -31,7 +32,8 @@ model Product {
   PRD_stock Int
   PRD_Seller Int
   user User @relation(fields: [PRD_Seller], references: [USR_UserId])
-  salesProducts Sale[] @relation("salesProducts")
+  sales Sale[] @relation("salesProducts")
+  shoppingCarts shoppingCart[]
 
   @@map("products")
 }
@@ -42,4 +44,12 @@ model Sale {
   SLE_buyer Int
   user User @relation(fields: [SLE_buyer], references: [USR_UserId])
   products Product[] @relation("salesProducts")
+}
+
+model shoppingCart {
+  SHP_ShoppingCartId Int @id @default(autoincrement())
+  SHP_UserID Int
+  SHP_ProductId Int
+  user User @relation(fields: [SHP_ShoppingCartId], references: [USR_UserId])
+  product Product @relation(fields: [SHP_ProductId], references: [PRD_ProductId])
 }
