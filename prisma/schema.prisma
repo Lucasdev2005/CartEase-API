@@ -12,44 +12,56 @@ datasource db {
 }
 
 model User {
-  USR_UserId  Int @id @default(autoincrement())
-  USR_Username String @unique
-  USR_Name String
-  USR_Password String
-  USR_Address String
-  USR_Seller Boolean
-  products Product[]
-  shopping Sale[]
+  USR_UserId    Int    @id @default(autoincrement())
+  USR_Username  String @unique
+  USR_Name      String
+  USR_Password  String
+  USR_Address   String
+  USR_Seller    Boolean
+  products      Product[]
+  buyer         Sale[] @relation("buyer")
+  seller        Sale[] @relation("seller")
   shoppingCarts shoppingCart[]
 
   @@map("users")
 }
 
 model Product {
-  PRD_ProductId Int @id @default(autoincrement())
-  PRD_Price Int
-  PRD_Name String
-  PRD_stock Int
-  PRD_Seller Int
-  user User @relation(fields: [PRD_Seller], references: [USR_UserId])
-  sales Sale[] @relation("salesProducts")
+  PRD_ProductId Int  @id @default(autoincrement())
+  PRD_Price     Int
+  PRD_Name      String
+  PRD_stock     Int
+  PRD_Seller    Int
+  user          User @relation(fields: [PRD_Seller], references: [USR_UserId])
   shoppingCarts shoppingCart[]
+  product       ProductSale[]
 
   @@map("products")
 }
 
 model Sale {
-  SLE_SaleId Int @id @default(autoincrement())
+  SLE_SaleId   Int      @id @default(autoincrement())
   SLE_DateSale DateTime @default(now())
-  SLE_buyer Int
-  user User @relation(fields: [SLE_buyer], references: [USR_UserId])
-  products Product[] @relation("salesProducts")
+  SLE_Value    Int
+  SLE_buyer    Int
+  SLE_Seller   Int
+  seller       User     @relation("seller", fields: [SLE_Seller], references: [USR_UserId])
+  buyer        User     @relation("buyer", fields: [SLE_buyer], references: [USR_UserId])
+  productsSale ProductSale[]
+}
+
+model ProductSale {
+  PRD_ProductSaleId Int     @id @default(autoincrement())
+  PRS_SaleId        Int
+  PRS_ProductId     Int
+  product           Product @relation(fields: [PRS_ProductId], references: [PRD_ProductId])
+  sale              Sale    @relation(fields: [PRS_SaleId], references: [SLE_SaleId])
 }
 
 model shoppingCart {
-  SHP_ShoppingCartId Int @id @default(autoincrement())
-  SHP_UserID Int
-  SHP_ProductId Int
-  user User @relation(fields: [SHP_ShoppingCartId], references: [USR_UserId])
-  product Product @relation(fields: [SHP_ProductId], references: [PRD_ProductId])
+  SHP_ShoppingCartId Int     @id @default(autoincrement())
+  SHP_UserID         Int
+  SHP_ProductId      Int
+  user               User    @relation(fields: [SHP_ShoppingCartId], references: [USR_UserId])
+  product            Product @relation(fields: [SHP_ProductId], references: [PRD_ProductId])
 }
