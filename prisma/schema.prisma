@@ -20,7 +20,6 @@ model User {
   USR_Seller    Boolean
   products      Product[]
   buyer         Sale[] @relation("buyer")
-  seller        Sale[] @relation("seller")
   shoppingCarts shoppingCart[]
 
   @@map("users")
@@ -44,8 +43,6 @@ model Sale {
   SLE_DateSale DateTime @default(now())
   SLE_Value    Int
   SLE_buyer    Int
-  SLE_Seller   Int
-  seller       User     @relation("seller", fields: [SLE_Seller], references: [USR_UserId])
   buyer        User     @relation("buyer", fields: [SLE_buyer], references: [USR_UserId])
   productsSale ProductSale[]
 }
@@ -54,6 +51,7 @@ model ProductSale {
   PRD_ProductSaleId Int     @id @default(autoincrement())
   PRS_SaleId        Int
   PRS_ProductId     Int
+  PRS_Quantity      Int     @default(1)
   product           Product @relation(fields: [PRS_ProductId], references: [PRD_ProductId])
   sale              Sale    @relation(fields: [PRS_SaleId], references: [SLE_SaleId])
 }
