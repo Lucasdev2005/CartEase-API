@@ -37,7 +37,7 @@ export class CrudController {
         });
     }
 
-    private _getRepository(repository): baseRepository<any> {
+    private _getRepository(repository: string): baseRepository<any> {
         let repositoryClass = require(`../../repositories/${repository}.repository`);
         try {
             let repositoryInstanced = new repositoryClass.default();
