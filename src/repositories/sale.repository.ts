@@ -4,17 +4,27 @@ import ProductRepository from "./product.repository";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import ProductSaleRepository from "./productSale.repository";
 
-export default class SaleRepository extends baseRepository<Sale> {
-    constructor() {super("sale")}
+interface SalePayload {
+    sale: {
+        SLE_buyer: number;
+    };
+    products: {
+        PRD_ProductId: number;
+        PRS_Quantity: number;
+    }[];
+}
 
-    public async createItem(data: any): Promise<Sale> {
+export default class SaleRepository extends baseRepository<Sale> {
+    constructor() { super("sale") }
+
+    public async createItem(data: SalePayload): Promise<Sale> {
         const productRepository = new ProductRepository();
         const productSaleRepository = new ProductSaleRepository();
-        let SaleValue: number = 0; 
+        let SaleValue: number = 0;
 
         //verify, products have stock
         for (const product of data.products) {
-            let productFound: Product = await  productRepository.findItem({
+            let productFound: Product = await productRepository.findItem({
                 PRD_ProductId: product.PRD_ProductId
             });
             SaleValue += productFound.PRD_Price * product.PRS_Quantity;
@@ -26,12 +36,13 @@ export default class SaleRepository extends baseRepository<Sale> {
         //save a sale
         let saleSaved: Sale = await super.createItem({
             ...data.sale,
+            SLE_DateSale: new Date(),
             SLE_Value: SaleValue,
         });
 
         //save sale Products
         for (const product of data.products) {
-            let productFound: Product = await  productRepository.findItem({
+            let productFound: Product = await productRepository.findItem({
                 PRD_ProductId: product.PRD_ProductId
             });
             productSaleRepository.createItem({
