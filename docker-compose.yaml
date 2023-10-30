@@ -11,6 +11,8 @@ services:
   app-production:
     environment:
       DATABASE_URL: postgresql://cartease:cartease@123@db:5432/db
+      AMBIENT: "production"
+      JWT_SECRET: "cartEase@123"
     build:
       dockerfile: ./Dockerfile.production
     depends_on:
