@@ -9,7 +9,7 @@ import ProductRepository from './product.repository';
         UserRepository,
         ProductRepository
     ],
-    providers: [baseRepository],
+    providers: [baseRepository, UserRepository],
     exports: [
         UserRepository,
         ProductRepository

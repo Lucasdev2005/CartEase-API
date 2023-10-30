@@ -1,16 +1,49 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, UnauthorizedException } from '@nestjs/common';
+import UserRepository from 'src/repositories/user.repository';
+import * as bcrypt from 'bcrypt';
+import { User } from '@prisma/client';
+import { JwtService } from '@nestjs/jwt';
+
+interface LoginPayload {
+    USR_Username: string,
+    USR_Password: string
+}
+
+interface userPayload {
+    USR_Username: string,
+    USR_Password: string,
+    USR_Adress: string,
+    USR_Seller: boolean
+}
 
 @Controller('auth')
 export class AuthController {
 
-    @Post()
-    public login() {
+    constructor(private userRepository: UserRepository, private jwtService: JwtService) {}
 
+    @HttpCode(HttpStatus.OK)
+    @Post()
+    private async _login(@Body() userPayload: LoginPayload) {
+        let user: User = await this.userRepository.findItem({
+            USR_Username: userPayload.USR_Username
+        });
+
+        if (user && bcrypt.compare(userPayload.USR_Password, user.USR_Password)) {
+            let payload = { sub: user.USR_UserId, username: user.USR_Username };
+            delete user.USR_Password;
+            return {
+                ...user,
+                token: await this.jwtService.signAsync(payload)
+            }
+        }
+        else {
+            throw new UnauthorizedException('Login invalid!');
+        }
     }
 
     @Post('createAccount')
-    public createAccount() {
-
+    private async _createAccount(@Body() user: userPayload) {
+        return await this.userRepository.createItem(user);
     }
 
 }
