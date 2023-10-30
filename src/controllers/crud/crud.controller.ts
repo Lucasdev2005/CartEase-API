@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Head, Headers, InternalServerErrorException, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Head, Headers, Post, Put, UseGuards } from '@nestjs/common';
 import { baseRepository } from 'src/repositories/base.repository';
 import { AuthGuard } from '../auth/auth.guard';
 
