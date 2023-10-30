@@ -1,6 +1,8 @@
-import { Body, Controller, Delete, Get, Head, Headers, InternalServerErrorException, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Head, Headers, InternalServerErrorException, Post, Put, UseGuards } from '@nestjs/common';
 import { baseRepository } from 'src/repositories/base.repository';
+import { AuthGuard } from '../auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('crud')
 export class CrudController {
 
