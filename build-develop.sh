@@ -1,3 +1,1 @@
-docker compose up -d --build db
-docker compose up -d --build app-develop
-docker exec -it cartease-api-app-develop-1 npx prisma migrate dev --create-only && npx prisma migrate dev
+docker compose up -d --build db && npm run start:dev
