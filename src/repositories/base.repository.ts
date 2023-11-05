@@ -27,7 +27,7 @@ export class baseRepository<Type> {
         });
     }
 
-    public async findAllItemsBy({distinct=[], where={}, select={}, orderBy={}}): Promise<Type[]> {
-        return await this.prisma[this.model].findMany();
+    public async findAllItemsBy({where={}}): Promise<Type[]> {
+        return await this.prisma[this.model].findMany({where});
     }
 }

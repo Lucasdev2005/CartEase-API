@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Head, Headers, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Head, Headers, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { baseRepository } from 'src/repositories/base.repository';
 import { AuthGuard } from '../auth/auth.guard';
 
@@ -7,8 +7,8 @@ import { AuthGuard } from '../auth/auth.guard';
 export class CrudController {
 
     @Get('getResource')
-    public async getResource(@Headers() headers, @Body() body) {
-        return await this._getRepository(headers.repository).findItem(body.where);
+    public async getResource(@Headers() headers, @Query('where') where: string) {
+        return await this._getRepository(headers.repository).findItem(this._parseQueryParams(where));
     }
 
     @Post('createResource')
@@ -25,18 +25,13 @@ export class CrudController {
     }
 
     @Delete("deleteResource")
-    public async deleteResource(@Headers() headers, @Body() body) {
-        return await this._getRepository(headers.repository).deleteItem(body.where);
+    public async deleteResource(@Headers() headers, @Query('where') where: string) {
+        return await this._getRepository(headers.repository).deleteItem(this._parseQueryParams(where));
     }
 
     @Get("ListResource")
-    public async listResource(@Headers() headers, @Body() body) {
-        return this._getRepository(headers.repository).findAllItemsBy({
-            distinct: body.distinct || {},
-            select: body.select || {},
-            orderBy: body.orderBy || {},
-            where: body.where || {}
-        });
+    public async listResource(@Headers() headers, @Query('where') where: string) {
+        return this._getRepository(headers.repository).findAllItemsBy({where: this._parseQueryParams(where)});
     }
 
     private _getRepository(repository: string): baseRepository<any> {
@@ -47,6 +42,15 @@ export class CrudController {
         }
         catch (error) {
             throw new Error(error);
+        }
+    }
+
+    private _parseQueryParams(stringObject: string = null) {
+        if (stringObject) {
+            return JSON.parse(JSON.parse(stringObject));
+        }
+        else {
+            return {}
         }
     }
 }
