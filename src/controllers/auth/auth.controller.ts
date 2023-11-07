@@ -12,7 +12,7 @@ interface LoginPayload {
 interface userPayload {
     USR_Username: string,
     USR_Password: string,
-    USR_Adress: string,
+    USR_Address: string,
     USR_Name: string,
     USR_Seller: boolean
 }
