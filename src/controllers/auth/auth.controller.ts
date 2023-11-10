@@ -29,7 +29,7 @@ export class AuthController {
             USR_Username: userPayload.USR_Username
         });
 
-        if (user && bcrypt.compare(userPayload.USR_Password, user.USR_Password)) {
+        if (user && await bcrypt.compare(userPayload.USR_Password, user.USR_Password)) {
             let payload = { sub: user.USR_UserId, username: user.USR_Username };
             delete user.USR_Password;
             return {
@@ -38,7 +38,7 @@ export class AuthController {
             }
         }
         else {
-            throw new UnauthorizedException('Login invalid!');
+            throw new UnauthorizedException('Username or password invalid!');
         }
     }
 
