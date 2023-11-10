@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpException, HttpStatus, Post, UnauthorizedException } from '@nestjs/common';
 import UserRepository from 'src/repositories/user.repository';
 import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
@@ -44,7 +44,15 @@ export class AuthController {
 
     @Post('createAccount')
     private async _createAccount(@Body() user: userPayload) {
-        return await this.userRepository.createItem(user);
+        let findUserByName = await this.userRepository.findItem({
+            USR_Username: user.USR_Username
+        });
+        if (!findUserByName) {
+            return await this.userRepository.createItem(user);
+        }
+        else {
+            throw new HttpException('Username já usado!', HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
