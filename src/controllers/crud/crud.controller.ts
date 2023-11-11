@@ -33,8 +33,8 @@ export class CrudController {
     public async listResource(
         @Headers() headers, 
         @Query('where') where: string,
-        @Query('page', new DefaultValuePipe(null), ParseIntPipe) page: number,
-        @Query('pageSize', new DefaultValuePipe(null), ParseIntPipe) pageSize: number,
+        @Query('page', new ParseIntPipe({optional: true})) page?: number,
+        @Query('pageSize', new ParseIntPipe({optional: true})) pageSize?: number,
     ) {
         return this._getRepository(headers.repository).findAllItemsBy({where: this._parseQueryParams(where), page, pageSize});
     }

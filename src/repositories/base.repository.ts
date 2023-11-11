@@ -49,7 +49,7 @@ export class baseRepository<Type> {
             }
         }
         else {
-            let data = await this.prisma[this.model].findMany({where});
+            return await this.prisma[this.model].findMany({where});
         }
     }
 }
