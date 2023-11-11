@@ -28,7 +28,7 @@ export class baseRepository<Type> {
     }
 
     public async findAllItemsBy({where={}, page = null, pageSize = null}) {
-        if (page && pageSize) {
+        if (page && pageSize) { 
             const skip = (page - 1) * pageSize;
             const totalCount = await this.prisma[this.model].count();
             const totalPages = Math.ceil(totalCount / pageSize);

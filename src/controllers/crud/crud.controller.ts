@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Headers, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { baseRepository } from 'src/repositories/base.repository';
 import { AuthGuard } from '../auth/auth.guard';
+import { json } from 'stream/consumers';
 
 @UseGuards(AuthGuard)
 @Controller('crud')
@@ -8,7 +9,7 @@ export class CrudController {
 
     @Get('getResource')
     public async getResource(@Headers() headers, @Query('where') where: string) {
-        return await this._getRepository(headers.repository).findItem(this._parseQueryParams(where));
+        return await this._getRepository(headers.repository).findItem(await this._parseQueryParams(where));
     }
 
     @Post('createResource')
@@ -26,7 +27,7 @@ export class CrudController {
 
     @Delete("deleteResource")
     public async deleteResource(@Headers() headers, @Query('where') where: string) {
-        return await this._getRepository(headers.repository).deleteItem(this._parseQueryParams(where));
+        return await this._getRepository(headers.repository).deleteItem(await this._parseQueryParams(where));
     }
 
     @Get("listResource")
@@ -36,7 +37,7 @@ export class CrudController {
         @Query('page', new ParseIntPipe({optional: true})) page?: number,
         @Query('pageSize', new ParseIntPipe({optional: true})) pageSize?: number,
     ) {
-        return this._getRepository(headers.repository).findAllItemsBy({where: this._parseQueryParams(where), page, pageSize});
+        return this._getRepository(headers.repository).findAllItemsBy({where: await this._parseQueryParams(where), page, pageSize});
     }
 
     private _getRepository(repository: string): baseRepository<any> {
