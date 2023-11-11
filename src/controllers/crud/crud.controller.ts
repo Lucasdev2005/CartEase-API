@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Headers, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, DefaultValuePipe, Delete, Get, Headers, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { baseRepository } from 'src/repositories/base.repository';
 import { AuthGuard } from '../auth/auth.guard';
 
@@ -29,9 +29,14 @@ export class CrudController {
         return await this._getRepository(headers.repository).deleteItem(this._parseQueryParams(where));
     }
 
-    @Get("ListResource")
-    public async listResource(@Headers() headers, @Query('where') where: string) {
-        return this._getRepository(headers.repository).findAllItemsBy({where: this._parseQueryParams(where)});
+    @Get("listResource")
+    public async listResource(
+        @Headers() headers, 
+        @Query('where') where: string,
+        @Query('page', new DefaultValuePipe(null), ParseIntPipe) page: number,
+        @Query('pageSize', new DefaultValuePipe(null), ParseIntPipe) pageSize: number,
+    ) {
+        return this._getRepository(headers.repository).findAllItemsBy({where: this._parseQueryParams(where), page, pageSize});
     }
 
     private _getRepository(repository: string): baseRepository<any> {

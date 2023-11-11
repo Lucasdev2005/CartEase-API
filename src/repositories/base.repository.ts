@@ -20,14 +20,36 @@ export class baseRepository<Type> {
             data: data
         });
     }
- 
+
     public deleteItem(where): Type {
         return this.prisma[this.model].delete({
             where: where
         });
     }
 
-    public async findAllItemsBy({where={}}): Promise<Type[]> {
-        return await this.prisma[this.model].findMany({where});
+    public async findAllItemsBy({where={}, page = null, pageSize = null}): Promise<Type[]> {
+        if (page && pageSize) {
+            const skip = (page - 1) * pageSize;
+            const totalCount = await this.prisma[this.model].count();
+            const totalPages = Math.ceil(totalCount / pageSize);
+            
+            let data = await this.prisma[this.model].findMany({
+                where,
+                skip,
+                take: pageSize,
+            });
+
+            return {
+                meta: {
+                    totalCount,
+                    totalPages,
+                    currentPage: page
+                },
+                ...data
+            }
+        }
+        else {
+            let data = await this.prisma[this.model].findMany({where});
+        }
     }
 }
