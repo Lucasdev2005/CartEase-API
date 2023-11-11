@@ -50,13 +50,12 @@ export class CrudController {
         }
     }
 
-    private _parseQueryParams(stringObject: string = null) {
+    private async _parseQueryParams(stringObject: string = null) {
         if (stringObject) {
-            return JSON.parse(JSON.parse(stringObject));
+            return await JSON.parse(stringObject);
         }
         else {
             return {}
         }
     }
 }
- 
