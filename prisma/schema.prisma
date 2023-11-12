@@ -21,6 +21,7 @@ model User {
   products      Product[]
   buyer         Sale[] @relation("buyer")
   shoppingCarts shoppingCart[]
+  assesments Assessment[]
 
   @@map("users")
 }
@@ -62,4 +63,12 @@ model shoppingCart {
   SHP_ProductId      Int
   user               User    @relation(fields: [SHP_ShoppingCartId], references: [USR_UserId])
   product            Product @relation(fields: [SHP_ProductId], references: [PRD_ProductId])
+}
+
+model Assessment {
+  ASS_AssesmentId Int  @id @default(autoincrement())
+  ASS_UserId      Int
+  ASS_Rating      Int  @default(0)
+  ASS_Description String
+  user            User @relation(fields: [ASS_UserId], references: [USR_UserId])
 }
