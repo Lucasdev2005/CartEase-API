@@ -27,7 +27,7 @@ export class baseRepository<Type> {
         });
     }
 
-    public async findAllItemsBy({where={}, page = null, pageSize = null}) {
+    public async findAllItemsBy({where={}, page = null, pageSize = null, include = null}) {
         if (page && pageSize) { 
             const skip = (page - 1) * pageSize;
             const totalCount = await this.prisma[this.model].count({
@@ -39,6 +39,7 @@ export class baseRepository<Type> {
                 where,
                 skip,
                 take: pageSize,
+                include
             });
 
             return {
@@ -51,7 +52,7 @@ export class baseRepository<Type> {
             }
         }
         else {
-            return await this.prisma[this.model].findMany({where});
+            return await this.prisma[this.model].findMany({where, include});
         }
     }
 }

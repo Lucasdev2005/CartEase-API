@@ -1,4 +1,4 @@
-import { Assessment, shoppingCart } from "@prisma/client";
+import { shoppingCart } from "@prisma/client";
 import { baseRepository } from "./base.repository";
 import { HttpException, HttpStatus } from "@nestjs/common";
 
@@ -22,5 +22,12 @@ export default class ShoppingCartRepository extends baseRepository<shoppingCart>
         else {
             return await super.createItem(data);
         }
+    }
+
+    public async findAllItemsBy({ where, page, pageSize, include }: { where?: {}; page?: any; pageSize?: any; include?: any; }): Promise<any> {
+        return await super.findAllItemsBy({where, page, pageSize, include: {
+            product: true,
+            user: true
+        }});
     }
 }
