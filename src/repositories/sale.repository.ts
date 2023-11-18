@@ -26,7 +26,7 @@ export default class SaleRepository extends baseRepository<Sale> {
             });
             SaleValue += productFound.PRD_Price * product.SHP_Quantity;
             if ((productFound.PRD_stock - product.SHP_Quantity) < 0) {
-                throw new HttpException('Product dont have Stock', HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new HttpException(productFound.PRD_Name + ' dont have Stock', HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
