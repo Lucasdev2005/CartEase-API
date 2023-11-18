@@ -19,7 +19,7 @@ model User {
   USR_Address   String
   USR_Seller    Boolean
   products      Product[]
-  buyer         Sale[] @relation("buyer")
+  sales         Sale[]
   shoppingCarts shoppingCart[]
   assesments Assessment[]
 
@@ -43,9 +43,11 @@ model Sale {
   SLE_SaleId   Int      @id @default(autoincrement())
   SLE_DateSale DateTime @default(now())
   SLE_Value    Int
-  SLE_buyer    Int
-  buyer        User     @relation("buyer", fields: [SLE_buyer], references: [USR_UserId])
+  SLE_Buyer    Int
+  buyer        User     @relation(fields: [SLE_Buyer], references: [USR_UserId])
   productsSale ProductSale[]
+
+  @@map("sales")
 }
 
 model ProductSale {
