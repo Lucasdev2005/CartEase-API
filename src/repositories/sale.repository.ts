@@ -1,5 +1,5 @@
 import { baseRepository } from "./base.repository";
-import { Product, Sale } from "@prisma/client";
+import { Product, Sale, shoppingCart } from "@prisma/client";
 import ProductRepository from "./product.repository";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import ProductSaleRepository from "./productSale.repository";
@@ -8,10 +8,7 @@ interface SalePayload {
     sale: {
         SLE_buyer: number;
     };
-    products: {
-        PRD_ProductId: number;
-        PRS_Quantity: number;
-    }[];
+    products: shoppingCart[];
 }
 
 export default class SaleRepository extends baseRepository<Sale> {
@@ -25,10 +22,10 @@ export default class SaleRepository extends baseRepository<Sale> {
         //verify, products have stock
         for (const product of data.products) {
             let productFound: Product = await productRepository.findItem({
-                PRD_ProductId: product.PRD_ProductId
+                PRD_ProductId: product.SHP_ProductId
             });
-            SaleValue += productFound.PRD_Price * product.PRS_Quantity;
-            if ((productFound.PRD_stock - product.PRS_Quantity) < 0) {
+            SaleValue += productFound.PRD_Price * product.SHP_Quantity;
+            if ((productFound.PRD_stock - product.SHP_Quantity) < 0) {
                 throw new HttpException('Product dont have Stock', HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
@@ -43,19 +40,19 @@ export default class SaleRepository extends baseRepository<Sale> {
         //save sale Products
         for (const product of data.products) {
             let productFound: Product = await productRepository.findItem({
-                PRD_ProductId: product.PRD_ProductId
+                PRD_ProductId: product.SHP_ProductId
             });
             productSaleRepository.createItem({
                 PRS_SaleId: saleSaved.SLE_SaleId,
-                PRS_ProductId: product.PRD_ProductId,
-                PRS_Quantity: product.PRS_Quantity
+                PRS_ProductId: product.SHP_ProductId,
+                PRS_Quantity: product.SHP_Quantity
             });
             productRepository.updateItem({
                 data: {
-                    PRD_stock: productFound.PRD_stock - product.PRS_Quantity
+                    PRD_stock: productFound.PRD_stock - product.SHP_Quantity
                 },
                 where: {
-                    PRD_ProductId: product.PRD_ProductId
+                    PRD_ProductId: product.SHP_ProductId
                 }
             })
         }
