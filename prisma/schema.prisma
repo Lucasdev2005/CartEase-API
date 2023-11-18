@@ -60,7 +60,8 @@ model ProductSale {
 model shoppingCart {
   SHP_ShoppingCartId Int     @id @default(autoincrement())
   SHP_UserID         Int
-  SHP_ProductId      Int
+  SHP_ProductId      Int     
+  SHP_Quantity       Int     @default(1)
   user               User    @relation(fields: [SHP_ShoppingCartId], references: [USR_UserId])
   product            Product @relation(fields: [SHP_ProductId], references: [PRD_ProductId])
 }
