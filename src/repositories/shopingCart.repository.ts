@@ -30,4 +30,17 @@ export default class ShoppingCartRepository extends baseRepository<shoppingCart>
             user: true
         }});
     }
+
+    public async updateItem({ data, where }: { data: any; where: any; }) {
+
+        if (data.SHP_Quantity <= 0) {
+            return await super.deleteItem(where);
+        }
+        else {
+            return await super.updateItem({
+                data,
+                where
+            });
+        }
+    }
 }
