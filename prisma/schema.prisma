@@ -55,7 +55,7 @@ model ProductSale {
   PRS_SaleId        Int
   PRS_ProductId     Int
   PRS_Quantity      Int     @default(1)
-  product           Product @relation(fields: [PRS_ProductId], references: [PRD_ProductId])
+  product           Product @relation(fields: [PRS_ProductId], references: [PRD_ProductId], onDelete: Cascade, onUpdate: Cascade)
   sale              Sale    @relation(fields: [PRS_SaleId], references: [SLE_SaleId])
 }
 

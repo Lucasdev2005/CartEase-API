@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Headers, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { baseRepository } from 'src/repositories/base.repository';
 import { AuthGuard } from '../auth/auth.guard';
-import { json } from 'stream/consumers';
 
 @UseGuards(AuthGuard)
 @Controller('crud')
