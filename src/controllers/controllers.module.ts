@@ -1,26 +1,13 @@
-//service
-import { PrismaService } from 'src/prisma.service';
-
-//controllers
-import { CrudController } from './crud/crud.controller';
-import { AuthController } from './auth/auth.controller';
-
-//modules
 import { Module } from '@nestjs/common';
-import { RepositoriesModule } from 'src/repositories/repositories.module';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { CrudController } from './crud/crud.controller';
+import { UserController } from './user/user.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserEntity } from 'src/entities/user-entity/user-entity';
 
 @Module({
-    imports: [
-        RepositoriesModule,
-        JwtModule.register({
-            global: true,
-            secret: process.env.JWT_SECRET,
-            signOptions: { expiresIn: '1h' },
-        }),
-    ]
-    ,
-    controllers: [CrudController, AuthController],
-    providers: [PrismaService]
+  controllers: [UserController],
+  imports: [
+    TypeOrmModule.forFeature([UserEntity])
+  ],
 })
 export class ControllersModule {}
