@@ -1,3 +1,4 @@
+import { HttpException, HttpStatus } from "@nestjs/common";
 import { BaseEntity, DeepPartial, FindOptionsWhere, Repository } from "typeorm";
 
 export abstract class CrudBaseService<T extends BaseEntity> {
@@ -19,11 +20,19 @@ export abstract class CrudBaseService<T extends BaseEntity> {
             Object.assign(find, data);
             return find.save();
         }
+        else {
+            throw new HttpException('not found!', HttpStatus.NOT_FOUND);
+        }
     }
 
     public async deleteResource(where: FindOptionsWhere<T>) {
         const find = await this.getResource(where);
-        return find.remove();
+        if (find) {
+            return find.remove();
+        }
+        else {
+            throw new HttpException('not found!', HttpStatus.NOT_FOUND);
+        }
     }
 
     public async paginateResource(where: FindOptionsWhere<T>, page: number, take: number) {

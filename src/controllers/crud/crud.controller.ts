@@ -1,4 +1,4 @@
-import { Body, Delete, Get, Headers, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
+import { Body, Delete, Get, Headers, HttpCode, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
 import { CrudBaseService } from "src/services/CrudBase.service";
 import { BaseEntity, DeepPartial } from "typeorm";
 
@@ -7,6 +7,7 @@ export abstract class CrudController<T extends BaseEntity> {
     constructor(public readonly service: CrudBaseService<T>) {}
 
     @Get('getResource')
+    @HttpCode(201)
     public async getResource(@Query('where') where: string) {
         return await this.service.getResource(await this._parseQueryParams(where));
     }
@@ -26,7 +27,7 @@ export abstract class CrudController<T extends BaseEntity> {
 
     @Delete("deleteResource")
     public async deleteResource(@Query('where') where: string) {
-        return await this.deleteResource(await this._parseQueryParams(where));
+        return await this.service.deleteResource(await this._parseQueryParams(where));
     }
 
     @Get("paginateResource")

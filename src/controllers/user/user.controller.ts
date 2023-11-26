@@ -10,5 +10,4 @@ export class UserController extends CrudController<UserEntity> {
         super(service)
     }
 
-
 }
