@@ -1,45 +1,55 @@
 import { Body, Delete, Get, Headers, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { BaseEntity, DeepPartial, Repository } from "typeorm";
+import { CrudBaseService } from "src/services/CrudBase.service";
+import { BaseEntity, DeepPartial } from "typeorm";
 
 export abstract class CrudController<T extends BaseEntity> {
 
-    constructor(public readonly repository: Repository<T>) {}
-    
+    constructor(public readonly service: CrudBaseService<T>) {}
 
-    // @Get('getResource')
-    // public async getResource(@Headers() headers, @Query('where') where: string) {
-    //     return this.repository.find({
-    //         where: this._parseQueryParams(where)
-    //     })
-    // }
-
-    @Post('createResource')
-    public createResource(@Body() body: DeepPartial<T>) {
-        return this.repository.save(this.repository.create(body));
+    @Get('getResource')
+    public async getResource(@Query('where') where: string) {
+        return await this.service.getResource(await this._parseQueryParams(where));
     }
 
-    // @Put('updateResource')
-    // public async updateResource(@Headers() headers, @Body() body: updateDTO) {
-    // }
+    @Post('createResource')
+    public async createResource(@Body() body: DeepPartial<T>) {
+        return await this.service.createResource(body);
+    }
 
-    // @Delete("deleteResource")
-    // public async deleteResource(@Headers() headers, @Query('where') where: string) {
+    @Put('updateResource')
+    public async updateResource(@Query('where') where: string, @Body() body: any) {
+        return await this.service.updateResource(
+            await this._parseQueryParams(where),
+            body
+        );
+    }
 
-    // }
+    @Delete("deleteResource")
+    public async deleteResource(@Query('where') where: string) {
+        return await this.deleteResource(await this._parseQueryParams(where));
+    }
 
-    // @Get("listResource")
-    // public async listResource(
-    //     @Headers() headers, 
-    //     @Query('where') where: string,
-    //     @Query('page', new ParseIntPipe({optional: true})) page?: number,
-    //     @Query('pageSize', new ParseIntPipe({optional: true})) pageSize?: number,
-    // ) {
-    // }
+    @Get("paginateResource")
+    public async paginateResource(
+        @Query('where') where: string,
+        @Query('page', new ParseIntPipe()) page: number,
+        @Query('pageSize', new ParseIntPipe()) pageSize: number,
+    ) {
+        return await this.service.paginateResource(
+            await this._parseQueryParams(where),
+            page,
+            pageSize
+        );
+    }
+
+    @Get("listResource")
+    public async listResource(@Query('where') where: string) {
+        return await this.service.listResource(await this._parseQueryParams(where));
+    }
 
     private async _parseQueryParams(stringObject: string = null) {
         if (stringObject) {
-            return await JSON.parse(stringObject);
+            return await JSON.parse(JSON.parse(stringObject));
         }
         else {
             return {}

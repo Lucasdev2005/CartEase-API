@@ -1,16 +1,14 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/entities/user-entity/user-entity';
+import { Controller } from '@nestjs/common';
+import { UserService } from 'src/services/user/user.service';
 import { CrudController } from '../crud/crud.controller';
+import { UserEntity } from 'src/entities/user-entity/user-entity';
 
 @Controller('user')
 export class UserController extends CrudController<UserEntity> {
 
-    constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>
-    ) {
-        super(userRepository)
+    constructor(public service: UserService) {
+        super(service)
     }
+
+
 }
