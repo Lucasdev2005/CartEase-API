@@ -9,9 +9,7 @@ export const dataSourceOptions: DataSourceOptions = {
     username: 'cartease',
     password: 'cartease@123',
     entities: [ __dirname + '/../**/*.entity{.ts,.js}',],
-    migrations: [ 
-        TableUsers1701049744028
-    ],
+    migrations: [TableUsers1701049744028],
     migrationsRun: true,
     synchronize: false,
 }
