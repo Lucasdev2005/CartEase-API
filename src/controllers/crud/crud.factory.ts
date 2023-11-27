@@ -28,8 +28,8 @@ export function CrudFactory<CreateDTO, UpdateDTO, entity extends BaseEntity>(
             return await this.service.createResource(body);
         }
 
-        @UsePipes(updatePipe)
         @Put('updateResource')
+        @UsePipes(updatePipe)
         public async updateResource(@Query('where') where: string, @Body() body) {
             return await this.service.updateResource(
                 await this.parseQueryParams(where),
@@ -67,6 +67,6 @@ export function CrudFactory<CreateDTO, UpdateDTO, entity extends BaseEntity>(
             return null
         }
     }
-  
+
     return CrudController;
   }
