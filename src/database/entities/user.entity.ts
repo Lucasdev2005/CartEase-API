@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class UserEntity extends BaseEntity {
@@ -14,4 +14,7 @@ export class UserEntity extends BaseEntity {
 
     @Column()
     USR_UserPassword: string
+
+    @Column({default: false})
+    USR_UserSeller: boolean = false;
 }

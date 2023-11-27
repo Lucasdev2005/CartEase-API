@@ -1,10 +1,13 @@
-import { Body, Delete, Get, Headers, HttpCode, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
+import { Body, Delete, Get, HttpCode, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
 import { CrudBaseService } from "src/services/CrudBase.service";
-import { BaseEntity, DeepPartial } from "typeorm";
+import { BaseEntity, FindOptionsWhere } from "typeorm";
+import { AbstractValidationPipe } from "./validation.pipe";
 
 export abstract class CrudController<T extends BaseEntity> {
 
-    constructor(public readonly service: CrudBaseService<T>) {}
+    constructor(
+        public readonly service: CrudBaseService<T>,
+    ) {}
 
     @Get('getResource')
     @HttpCode(201)
@@ -13,12 +16,12 @@ export abstract class CrudController<T extends BaseEntity> {
     }
 
     @Post('createResource')
-    public async createResource(@Body() body: DeepPartial<T>) {
+    public async createResource(@Body() body) {
         return await this.service.createResource(body);
     }
 
     @Put('updateResource')
-    public async updateResource(@Query('where') where: string, @Body() body: any) {
+    public async updateResource(@Query('where') where: string, @Body() body) {
         return await this.service.updateResource(
             await this._parseQueryParams(where),
             body
@@ -48,12 +51,10 @@ export abstract class CrudController<T extends BaseEntity> {
         return await this.service.listResource(await this._parseQueryParams(where));
     }
 
-    private async _parseQueryParams(stringObject: string = null) {
+    private async _parseQueryParams(stringObject: string = null): Promise<FindOptionsWhere<T>> | null {
         if (stringObject) {
             return await JSON.parse(JSON.parse(stringObject));
         }
-        else {
-            return {}
-        }
+        return null
     }
 }
