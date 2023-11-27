@@ -1,4 +1,4 @@
-import { Body, Delete, Get, HttpCode, ParseIntPipe, Post, Put, Query, Type, UsePipes } from "@nestjs/common";
+import { Body, Delete, Get, HttpCode, ParseIntPipe, Post, Put, Query, Type } from "@nestjs/common";
 import { BaseEntity, FindOptionsWhere } from "typeorm";
 import { AbstractValidationPipe } from "./validation.pipe";
 import { CrudBaseService } from "src/services/CrudBase.service";
@@ -23,14 +23,12 @@ export function CrudFactory<CreateDTO, UpdateDTO, entity extends BaseEntity>(
         }
 
         @Post('createResource')
-        @UsePipes(createPipe)
-        public async createResource(@Body() body) {
+        public async createResource(@Body(createPipe) body) {
             return await this.service.createResource(body);
         }
 
         @Put('updateResource')
-        @UsePipes(updatePipe)
-        public async updateResource(@Query('where') where: string, @Body() body) {
+        public async updateResource(@Query('where') where: string, @Body(updatePipe) body) {
             return await this.service.updateResource(
                 await this.parseQueryParams(where),
                 body

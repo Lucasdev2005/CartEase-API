@@ -1,20 +1,21 @@
-import { IsBoolean, IsNotEmpty, IsString, Length } from "class-validator";
+import { IsBoolean, IsString, Length, IsOptional } from "class-validator";
 
 export class UpdateUserDTO {
 
-    @IsNotEmpty()
     @IsString()
-    USR_Username: string;
+    @IsOptional()
+    USR_Username?: string;
 
     @IsBoolean()
-    USR_UserSeller: boolean;
+    @IsOptional()
+    USR_UserSeller?: boolean;
 
-    @IsNotEmpty()
     @Length(9)
     @IsString()
-    USR_UserPassword: string
+    @IsOptional()
+    USR_UserPassword?: string
 
-    @IsNotEmpty()
     @IsString()
-    USR_UserAdress: string
+    @IsOptional()
+    USR_UserAdress?: string
 }
