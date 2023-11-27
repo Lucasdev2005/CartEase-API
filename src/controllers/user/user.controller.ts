@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { UserService } from 'src/services/user/user.service';
 import { CrudController } from '../crud/crud.controller';
-import { UserEntity } from 'src/entities/user-entity/user-entity';
+import { UserEntity } from 'src/database/entities/user.entity';
 
 @Controller('user')
 export class UserController extends CrudController<UserEntity> {
