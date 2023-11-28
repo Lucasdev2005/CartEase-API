@@ -40,7 +40,13 @@ export const userSwagger: CrudSwagger = {
         operation: {
             description: "Operação responsável por pegar um usuário a partir de certas informações",
         },
-        where: {}
+        where: {
+            name: "where",
+            schema: {
+                type: "string"
+            },
+            example: {"USR_UserId": 8}
+        }
     },
     deleteOperation: {
         operation: {

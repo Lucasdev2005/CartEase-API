@@ -21,13 +21,7 @@ export function CrudFactory<CreateDTO, UpdateDTO, entity extends BaseEntity>(
 
         @Get('getResource')
         @ApiOperation(crudSwagger.getOperation.operation)
-        @ApiQuery({
-            name: "where",
-            description: "Deve ser uma string JSON",
-            schema: {
-                type: "string",
-            },
-        })
+        @ApiQuery(crudSwagger.getOperation.where)
         public async getResource(@Query('where') where: string) {
             return await this.service.getResource(await this.parseQueryParams(where));
         }
@@ -87,4 +81,4 @@ export function CrudFactory<CreateDTO, UpdateDTO, entity extends BaseEntity>(
     }
 
     return CrudController;
-  }
+}
