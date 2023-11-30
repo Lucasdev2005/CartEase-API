@@ -1,5 +1,6 @@
 import { DataSource, DataSourceOptions } from "typeorm";
 import { TableUsers1701049744028 } from "./migrations/1701049744028-table_users";
+import { Products1701353105246 } from "./migrations/1701353105246-products";
 
 export const dataSourceOptions: DataSourceOptions = {
     type: 'postgres',
@@ -9,7 +10,10 @@ export const dataSourceOptions: DataSourceOptions = {
     username: 'cartease',
     password: 'cartease@123',
     entities: [ __dirname + '/../**/*.entity{.ts,.js}',],
-    migrations: [TableUsers1701049744028],
+    migrations: [
+        TableUsers1701049744028,
+        Products1701353105246
+    ],
     migrationsRun: true,
     synchronize: false,
 }
