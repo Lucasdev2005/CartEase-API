@@ -22,7 +22,8 @@
     "typeorm:run-migrations": "npm run typeorm migration:run -- -d src/database/data-source.ts",
     "typeorm:create-migration": "npm run typeorm -- migration:create src/database/migrations/%NAME%",
     "typeorm:create-entity": "npm run typeorm -- entity:create src/database/entities/%NAME%",
-    "typeorm:revert-migration": "npm run typeorm -- -d src/database/data-source.ts migration:revert"
+    "typeorm:revert-migration": "npm run typeorm -- -d src/database/data-source.ts migration:revert",
+    "create-resource": "nest g controller %NAME% Controllers && nest g service %NAME% services"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsString, Length } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsString, Length, MaxLength } from "class-validator";
 
 export default class CreateUserDTO {
 
@@ -10,7 +10,7 @@ export default class CreateUserDTO {
     USR_UserSeller: boolean;
 
     @IsNotEmpty()
-    @Length(9)
+    @MaxLength(9)
     @IsString()
     USR_UserPassword: string
 

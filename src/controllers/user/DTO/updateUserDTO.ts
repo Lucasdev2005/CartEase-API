@@ -1,4 +1,4 @@
-import { IsBoolean, IsString, Length, IsOptional } from "class-validator";
+import { IsBoolean, IsString, Length, IsOptional, MaxLength } from "class-validator";
 
 export class UpdateUserDTO {
 
@@ -10,7 +10,7 @@ export class UpdateUserDTO {
     @IsOptional()
     USR_UserSeller?: boolean;
 
-    @Length(9)
+    @MaxLength(9)
     @IsString()
     @IsOptional()
     USR_UserPassword?: string
