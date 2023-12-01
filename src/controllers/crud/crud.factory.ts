@@ -1,5 +1,5 @@
 import { Body, Delete, Get, HttpCode, ParseIntPipe, Post, Put, Query, Type } from "@nestjs/common";
-import { BaseEntity, FindOptionsWhere } from "typeorm";
+import { BaseEntity, DeepPartial, FindOptionsWhere } from "typeorm";
 import { AbstractValidationPipe } from "./validation.pipe";
 import { CrudBaseService } from "src/services/CrudBase.service";
 import { ApiOperation, ApiQuery } from "@nestjs/swagger";
@@ -29,17 +29,17 @@ export function CrudFactory<CreateDTO, UpdateDTO, entity extends BaseEntity>(
         @Post('createResource')
         @HttpCode(201)
         @ApiOperation(crudSwagger.createOperation)
-        public async createResource(@Body(createPipe) body) {
-            return await this.service.createResource(body);
+        public async createResource(@Body(createPipe) body: CreateDTO) {
+            return await this.service.createResource(body as DeepPartial<entity>);
         }
 
         @Put('updateResource')
         @ApiOperation(crudSwagger.updateOperation.operation)
         @ApiQuery(crudSwagger.updateOperation.where)
-        public async updateResource(@Query('where') where: string, @Body(updatePipe) body) {
+        public async updateResource(@Query('where') where: string, @Body(updatePipe) body: UpdateDTO) {
             return await this.service.updateResource(
                 await this.parseQueryParams(where),
-                body
+                body as DeepPartial<entity>
             );
         }
 

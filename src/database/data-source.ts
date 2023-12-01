@@ -19,8 +19,10 @@ export const dataSourceOptions: DataSourceOptions = {
         TableUsers1701049744028,
         Products1701353105246
     ],
-    migrationsRun: true,
     synchronize: false,
+    extra: {
+        connectionTimeoutMillis: 30000,
+    },
 }
 
 const dataSource = new DataSource(dataSourceOptions);
