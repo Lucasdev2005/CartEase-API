@@ -22,7 +22,7 @@ describe('UserService', () => {
       expect(service).toBeDefined();
     });
 
-    describe('Create, update, delete and get User', () => {
+    describe('Create, update, get and delete a User', () => {
       let result;
       let id: number;
 
