@@ -23,9 +23,8 @@ describe('UserService', () => {
     });
 
     describe('Create, update, get and delete a User', () => {
-      let result;
       let id: number;
-
+      
       it('should create a user', async () => {
         const userData = {
           USR_UserAdress: "aerolandia",
@@ -34,7 +33,7 @@ describe('UserService', () => {
           USR_UserSeller: true
         }; 
         
-        result = await service.createResource(userData);
+        let result = await service.createResource(userData);
         id = result.USR_UserId;
     
         //deletar ID pois sempre irá mudar e quebrar o teste.
