@@ -1,6 +1,0 @@
-{
-    "material-icon-theme.activeIconPack": "nest",
-    "material-icon-theme.files.associations": {
-        "*.repository.ts": "nest-service",
-    }
-}
